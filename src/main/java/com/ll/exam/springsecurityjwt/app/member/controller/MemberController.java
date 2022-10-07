@@ -2,6 +2,7 @@ package com.ll.exam.springsecurityjwt.app.member.controller;
 
 import com.ll.exam.springsecurityjwt.app.member.entity.Member;
 import com.ll.exam.springsecurityjwt.app.member.service.MemberService;
+import com.ll.exam.springsecurityjwt.util.Util;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/member")
@@ -37,9 +36,9 @@ public class MemberController {
         }
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authentication", "JWT토큰");
-        String body =  "username : %s, password : %s".formatted(loginDto.getUsername(), loginDto.getPassword());
-        return new ResponseEntity<>(body, headers, HttpStatus.OK);
+        headers.set("Authentication", "JWT_Access_Token");
+//        return new ResponseEntity<>(body, headers, HttpStatus.OK);
+        return Util.spring.responseEntityOf(headers);
     }
 
     @Data
