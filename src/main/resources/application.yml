@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+logging:
+  level:
+    com.ll.exam.com.ll.exam.springsecurityjwt.app: debug
