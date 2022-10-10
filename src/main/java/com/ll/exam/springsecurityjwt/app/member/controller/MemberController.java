@@ -35,11 +35,18 @@ public class MemberController {
         if (passwordEncoder.matches(loginDto.getPassword(), member.getPassword()) == false) {
             return Util.spring.responseEntityOf(RsData.of("F-3", "비밀번호가 일치하지 않습니다."));
         }
+        String accessToken = "JWT_Access_Token";
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authentication", "JWT_Access_Token");
-//        return new ResponseEntity<>(body, headers, HttpStatus.OK);
-        return Util.spring.responseEntityOf(RsData.of("S-1", "로그인 성공, Access Token을 발급합니다."), headers);
+        return Util.spring.responseEntityOf(
+                RsData.of(
+                        "S-1",
+                        "로그인 성공, Access Token을 발급합니다.",
+                        Util.mapOf(
+                                "accessToken", accessToken
+                        )
+                ),
+                Util.spring.httpHeadersOf("Authentication", accessToken)
+        );
     }
 
     @Data
