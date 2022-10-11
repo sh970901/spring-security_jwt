@@ -20,9 +20,9 @@ import javax.persistence.ManyToOne;
 public class Article extends BaseEntity {
     @ManyToOne
     private Member author;
-    @Column(unique = true)
+
     private String subject;
-    @JsonIgnore
+
     private String content;
 
     public Article(long id) {
