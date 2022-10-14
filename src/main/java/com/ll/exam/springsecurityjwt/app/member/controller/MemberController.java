@@ -6,6 +6,7 @@ import com.ll.exam.springsecurityjwt.app.member.entity.Member;
 import com.ll.exam.springsecurityjwt.app.member.security.entity.MemberContext;
 import com.ll.exam.springsecurityjwt.app.member.service.MemberService;
 import com.ll.exam.springsecurityjwt.util.Util;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import javax.validation.Valid;
 @RequestMapping("/member")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "MemberController", description = "로그인 기능과 로그인 된 회원의 정보를 제공 기능을 담당하는 컨트롤러")
 public class MemberController {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
