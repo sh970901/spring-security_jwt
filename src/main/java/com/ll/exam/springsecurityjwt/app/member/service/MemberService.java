@@ -50,4 +50,9 @@ public class MemberService {
     public boolean verifyWithWhiteList(Member member, String token) {
         return member.getAccessToken().equals(token);
     }
+
+    @Cacheable("member")
+    public Member getByUsername__cached(String username) {
+        return findByUsername(username).orElse(null);
+    }
 }
