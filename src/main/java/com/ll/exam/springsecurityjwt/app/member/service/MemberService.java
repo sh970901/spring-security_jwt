@@ -32,6 +32,7 @@ public class MemberService {
         return memberRepository.findByUsername(username);
     }
 
+
     @Transactional
     public String genAccessToken(Member member) {
         String accessToken = member.getAccessToken();
