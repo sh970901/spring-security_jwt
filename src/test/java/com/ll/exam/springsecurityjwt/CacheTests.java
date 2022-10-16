@@ -1,5 +1,6 @@
 package com.ll.exam.springsecurityjwt;
 
+import com.ll.exam.springsecurityjwt.app.cacheTest.service.CacheTestService;
 import com.ll.exam.springsecurityjwt.app.member.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,17 +17,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("test")
 class CacheTests {
     @Autowired
-    private MemberService memberService;
-
+    private CacheTestService cacheTestService;
     @Test
     @DisplayName("캐시 사용")
     void t1() throws Exception {
-        int rs = memberService.getCachedInt();
+        int rs = cacheTestService.getCachedInt();
 
         assertThat(rs).isGreaterThan(0);
         System.out.println(rs);
 
-        rs = memberService.getCachedInt();
+        rs = cacheTestService.getCachedInt();
 
         assertThat(rs).isGreaterThan(0);
         System.out.println(rs);
@@ -35,28 +35,41 @@ class CacheTests {
     @Test
     @DisplayName("캐시 삭제")
     void t2() throws Exception {
-        int rs = memberService.getCachedInt();
+        int rs = cacheTestService.getCachedInt();
         System.out.println(rs);
 
 
         assertThat(rs).isGreaterThan(0);
-        memberService.deleteCacheKey1();
+        cacheTestService.deleteCacheKey1();
 
-        rs = memberService.getCachedInt();
+        rs = cacheTestService.getCachedInt();
         System.out.println(rs);
     }
     @Test
     @DisplayName("캐시 수정")
     void t3() throws Exception {
-        int rs = memberService.getCachedInt();
+        int rs = cacheTestService.getCachedInt();
         System.out.println(rs);
 
-        rs = memberService.getCachedInt();
+        rs = cacheTestService.getCachedInt();
         System.out.println(rs);
 
-        memberService.putCacheKey1();
+        cacheTestService.putCacheKey1();
 
-        rs = memberService.getCachedInt();
+        rs = cacheTestService.getCachedInt();
+        System.out.println(rs);
+    }
+
+    @Test
+    @DisplayName("더하기 캐시")
+    void t4() throws Exception {
+        int rs = cacheTestService.plus(10, 20);
+        System.out.println(rs);
+
+        rs = cacheTestService.plus(5, 2);
+        System.out.println(rs);
+
+        rs = cacheTestService.plus(10, 20);
         System.out.println(rs);
     }
 }
