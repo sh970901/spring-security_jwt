@@ -1,5 +1,6 @@
 package com.ll.exam.springsecurityjwt.app.member.service;
 
+import com.ll.exam.springsecurityjwt.app.AppConfig;
 import com.ll.exam.springsecurityjwt.app.member.entity.Member;
 import com.ll.exam.springsecurityjwt.app.member.repository.MemberRepository;
 import com.ll.exam.springsecurityjwt.app.member.security.jwt.JwtProvider;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -52,7 +54,16 @@ public class MemberService {
     }
 
     @Cacheable("member")
+    public Map<String, Object> getMemberMapByUsername__cached(String username) {
+        Member member = findByUsername(username).orElse(null);
+
+        return member.toMap();
+    }
+
     public Member getByUsername__cached(String username) {
-        return findByUsername(username).orElse(null);
+        MemberService thisObj = (MemberService) AppConfig.getContext().getBean("memberService");
+        Map<String, Object> memberMap = thisObj.getMemberMapByUsername__cached(username);
+
+        return Member.fromMap(memberMap);
     }
 }

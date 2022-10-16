@@ -35,12 +35,32 @@ public class Member extends BaseEntity {
     public Member(long id) {
         super(id);
     }
+    public static Member fromMap(Map<String, Object> map) {
+        return fromJwtClaims(map);
+    }
     public static Member fromJwtClaims(Map<String, Object> jwtClaims) {
-        long id = (long)(int)jwtClaims.get("id");
-        LocalDateTime createDate = Util.date.bitsToLocalDateTime((List<Integer>)jwtClaims.get("createDate"));
-        LocalDateTime modifyDate = Util.date.bitsToLocalDateTime((List<Integer>)jwtClaims.get("modifyDate"));
-        String username = (String)jwtClaims.get("username");
-        String email = (String)jwtClaims.get("email");
+        long id = 0;
+
+        if (jwtClaims.get("id") instanceof Long) {
+            id = (long) jwtClaims.get("id");
+        } else if (jwtClaims.get("id") instanceof Integer) {
+            id = (long) (int) jwtClaims.get("id");
+        }
+
+        LocalDateTime createDate = null;
+        LocalDateTime modifyDate = null;
+
+        if (jwtClaims.get("createDate") instanceof List) {
+            createDate = Util.date.bitsToLocalDateTime((List<Integer>) jwtClaims.get("createDate"));
+        }
+
+        if (jwtClaims.get("modifyDate") instanceof List) {
+            modifyDate = Util.date.bitsToLocalDateTime((List<Integer>) jwtClaims.get("modifyDate"));
+        }
+
+        String username = (String) jwtClaims.get("username");
+        String email = (String) jwtClaims.get("email");
+        String accessToken = (String) jwtClaims.get("accessToken");
 
         return Member
                 .builder()
@@ -49,6 +69,7 @@ public class Member extends BaseEntity {
                 .modifyDate(modifyDate)
                 .username(username)
                 .email(email)
+                .accessToken(accessToken)
                 .build();
     }
 
@@ -66,6 +87,18 @@ public class Member extends BaseEntity {
                 "modifyDate", getModifyDate(),
                 "username", getUsername(),
                 "email", getEmail(),
+                "authorities", getAuthorities()
+        );
+    }
+
+    public Map<String, Object> toMap() {
+        return Util.mapOf(
+                "id", getId(),
+                "createDate", getCreateDate(),
+                "modifyDate", getModifyDate(),
+                "username", getUsername(),
+                "email", getEmail(),
+                "accessToken", getAccessToken(),
                 "authorities", getAuthorities()
         );
     }
