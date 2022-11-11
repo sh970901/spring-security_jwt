@@ -1,13 +1,13 @@
 spring:
-  profiles:
-    active: dev
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
   cache:
     type: redis
     redis:
       host: 127.0.0.1
       port: 6379
+  profiles:
+    active: dev
+    datasource:
+      driver-class-name: com.mysql.jdbc.Driver
   jpa:
     properties:
       hibernate:

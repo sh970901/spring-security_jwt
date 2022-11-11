@@ -15,10 +15,12 @@ import java.util.Map;
 public class JwtProvider {
     private final SecretKey jwtSecretKey;
 
+    //시크릿 키 제공
     private SecretKey getSecretKey() {
         return jwtSecretKey;
     }
 
+    //claims로 부터 엑세스토큰 생성
     public String generateAccessToken(Map<String, Object> claims, long seconds) {
         long now = new Date().getTime();
         Date accessTokenExpiresIn = new Date(now + 1000L * seconds);
@@ -30,6 +32,7 @@ public class JwtProvider {
                 .compact();
     }
 
+    //시크릿 키를 넣어보고 유효한지 확인
     public boolean verify(String token) {
         try {
             Jwts.parserBuilder()
@@ -43,6 +46,7 @@ public class JwtProvider {
         return true;
     }
 
+    //엑세스토큰으로 부터 claims 생성
     public Map<String, Object> getClaims(String token) {
         String body = Jwts.parserBuilder()
                 .setSigningKey(getSecretKey())

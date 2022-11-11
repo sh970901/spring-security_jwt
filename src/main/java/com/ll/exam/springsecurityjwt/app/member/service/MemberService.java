@@ -61,6 +61,7 @@ public class MemberService {
     }
 
     public Member getByUsername__cached(String username) {
+        //@Cacheable은 앞단에 프록시객체가 받지못하고 바로 this에 자기자신이 받아 적용되지 않을 수 있기 때문에 getBean으로 받는다.
         MemberService thisObj = (MemberService) AppConfig.getContext().getBean("memberService");
         Map<String, Object> memberMap = thisObj.getMemberMapByUsername__cached(username);
 

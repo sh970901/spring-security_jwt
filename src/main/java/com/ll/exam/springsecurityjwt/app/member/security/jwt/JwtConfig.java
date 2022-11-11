@@ -13,6 +13,7 @@ public class JwtConfig {
     @Value("${custom.jwt.secretKey}")
     private String secretKeyPlain;
 
+    //Base 64 인코딩
     @Bean
     public SecretKey jwtSecretKey() {
         String keyBase64Encoded = Base64.getEncoder().encodeToString(secretKeyPlain.getBytes());

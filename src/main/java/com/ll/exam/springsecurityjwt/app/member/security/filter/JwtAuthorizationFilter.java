@@ -27,6 +27,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private final JwtProvider jwtProvider;
     private final MemberService memberService;
 
+
+    //인증 필터 추가
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.debug("JwtAuthorizationFilter 실행됨");
@@ -41,11 +43,12 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 Member member = memberService.getByUsername__cached((String) claims.get("username"));
                 // 2차 체크(화이트리스트에 포함되는지)
                 if ( memberService.verifyWithWhiteList(member, token) ) {
+                    //로그인 처리
                     forceAuthentication(member);
                 }
             }
         }
-
+        //다음 필터 진행
         filterChain.doFilter(request, response);
     }
 
