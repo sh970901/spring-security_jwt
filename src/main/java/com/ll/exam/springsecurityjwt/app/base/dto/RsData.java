@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-//ResponseEntity의 헤더, 바디, 상태코드 중 바디를 커스텀하기 위한 ResultData 클래스
+//ResponseEntity<>의 헤더, 바디, 상태코드 중 바디를 커스텀하기 위한 ResultData 클래스 RsData로 실패시에도 커스텀한 상태 코드와 메시지 전달 가능
 @Getter
 @Setter
 @AllArgsConstructor
